@@ -12,7 +12,7 @@ do
     if netstat -tunlp | grep 1984 | grep LISTEN | read line
     then
         echo "shadowsocks is up!"
-        sleep 3s
+        sleep 10s
         ngrok tcp 1984
         break
     fi
