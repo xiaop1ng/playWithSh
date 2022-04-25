@@ -5,6 +5,7 @@ export SSPASSWORD=123456
 docker run -d -p 1984:1984 oddrationale/docker-shadowsocks -s 0.0.0.0 -p 1984 -k $SSPASSWORD -m aes-256-cfb
 
 # install frp
+mkdir /etc/frp
 cat>/etc/frp/frps.ini<<EOF
 [common]
 server_addr = 1.12.227.99
