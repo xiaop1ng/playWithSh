@@ -6,7 +6,8 @@ docker run -d -p 1984:1984 oddrationale/docker-shadowsocks -s 0.0.0.0 -p 1984 -k
 
 # install frp
 mkdir /etc/frp
-cat>/etc/frp/frps.ini<<EOF
+# frp clien file
+cat>/etc/frp/frpc.ini<<EOF
 [common]
 server_addr = 1.12.227.99
 server_port = 7000
