@@ -16,9 +16,9 @@ server_port = 7000
 
 [tcp]
 type = tcp
-remote_port = 1984
+remote_port = 8388
 local_ip = 127.0.0.1
-local_port = 1984
+local_port = 8388
 EOF
 
 # wait shadowsocks up: start frpc
