@@ -3,7 +3,7 @@
 # install shadowsocks
 export SSPASSWORD=123456
 docker pull shadowsocks/shadowsocks-libev
-docker run -d --restart=always -p 8388:8388 -p 8388:8388/udp shadowsocks/shadowsocks-libev ss-server -p 8388  -k $SSPASSWORD -m aes-256-cfb
+docker run -d --restart=always -p 8388:8388 -p 8388:8388/udp shadowsocks/shadowsocks-libev ss-server -p 8388  -k $SSPASSWORD -m aes-256-gcm
 
 
 # install frp
