@@ -12,7 +12,7 @@ cat>/etc/frp/frpc.ini<<EOF
 server_addr = 1.12.227.99
 server_port = 7000
 
-[tcp]
+[tcp1]
 type = tcp
 remote_port = 1984
 local_ip = 127.0.0.1
@@ -20,18 +20,10 @@ local_port = 1984
 EOF
 
 # wait shadowsocks up: start frpc
-while true
-do
-    if netstat -tunlp | grep 1984 | grep LISTEN | read line
-    then
-        echo "shadowsocks is up!"
-        docker run --restart=always --network host -d -v /etc/frp/frpc.ini:/etc/frp/frpc.ini --name frpc snowdreamtech/frpc
-        break
-    fi
-	echo "wait for shadowsocks up, 5 seconds"
-	# sleep for 5 seconds
-	sleep 5s
-done
+docker pull snowdreamtech/frpc
+sleep 3s
+
+docker run --restart=always --network host -d -v /etc/frp/frpc.ini:/etc/frp/frpc.ini --name frpc snowdreamtech/frpc
 
 # complete
 echo "completed!"
