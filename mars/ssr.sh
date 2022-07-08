@@ -13,7 +13,7 @@ cat>~/frpc.ini<<EOF
 server_addr = 1.12.227.99
 server_port = 7000
 
-[tcp]
+[ssr]
 type = tcp
 remote_port = 8389
 local_ip = 127.0.0.1
