@@ -12,7 +12,7 @@ mkdir /etc/frp
 cat>/etc/frp/frpc.ini<<EOF
 [common]
 server_addr = 116.76.37.159
-server_port = 7500
+server_port = 7000
 
 [tcp]
 type = tcp
