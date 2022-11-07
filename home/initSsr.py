@@ -4,6 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from time import localtime,strftime
+from selenium.webdriver.chrome.service import Service
 
 # 创建chrome参数对象
 options = webdriver.ChromeOptions()
@@ -19,21 +20,23 @@ options.add_argument('--hide-scrollbars')
 options.add_argument('blink-settings=imagesEnabled=false')
 
 sys = platform.system()
-print("time: " + strftime("%Y年%m月%d日 %A %I:%M:%S", localtime()))
+print("time: " + strftime("%Y-%m-%d %H:%M:%S", localtime()))
 print("system: " + sys)
 path='./chromedriver'
 if sys == "Linux":
     # 浏览器不提供可视化页面. linux下如果系统不支持可视化不加这条会启动失败
     options.add_argument('--headless')
+    path = '/root/py/chromedriver'
 elif sys == "Windows":
     path = './chromedriver.exe'
 
 
 # 初始化一个driver，chromedriver的路径选择的是相对路径，不行就写绝对路径
-driver = webdriver.Chrome(options=options, executable_path=path)
+driver = webdriver.Chrome(options=options, service= Service(executable_path=path))
 print("驱动完成初始化.")
 
 def playwithdocker(retry = True):
+    print("play with docker invoke.")
     # 打开登录页 获取登录按钮
     oauth_url = "https://labs.play-with-docker.com/oauth/providers/docker/login"
     # 请求网页
@@ -61,6 +64,7 @@ def playwithdocker(retry = True):
 print("正在启动终端.")
 
 def playwithk8s(retry = True):
+    print("play with k8s invoke.")
     # 打开登录页 获取登录按钮
     oauth_url = "https://labs.play-with-k8s.com/oauth/providers/docker/login"
     # 请求网页
@@ -84,7 +88,17 @@ def playwithk8s(retry = True):
     return
 
 # test
-playwithdocker()
+try:
+    playwithdocker()
+except Exception as e:
+    print("Error: 打开终端异常，开始尝试使用 play with k8s，%s", e)
+    time.sleep(10)
+    playwithk8s()
+
+
+
+
+
 time.sleep(10)
 btn_new = driver.find_element(By.CLASS_NAME, "md-primary")
 if btn_new == None:
