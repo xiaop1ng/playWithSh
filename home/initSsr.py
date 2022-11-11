@@ -114,8 +114,9 @@ newline = driver.find_element(By.CLASS_NAME, "xterm-helper-textarea")
 newline.send_keys("curl https://raw.githubusercontent.com/xiaop1ng/playWithSh/main/home/ssr.sh | sh -")
 newline.send_keys(Keys.ENTER)
 
-time.sleep(60)
-# 退出浏览器
 print("done.")
+# 两个小时后推出浏览器 防止 session 失效
+time.sleep(60*60*3)
+# 退出浏览器
 driver.close()
 driver.quit()
