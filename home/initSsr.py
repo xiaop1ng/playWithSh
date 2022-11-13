@@ -59,6 +59,8 @@ def playwithdocker(retry = True):
     # 检查浏览器地址是否 ooc，尝试从 playwithk8s 启动
     if driver.current_url == "https://labs.play-with-docker.com/ooc" and retry:
         playwithk8s(False)
+    else:
+        start()
     return
 
 print("正在启动终端.")
@@ -85,7 +87,32 @@ def playwithk8s(retry = True):
     # 检查浏览器地址是否 ooc，尝试从 playwithk8s 启动
     if driver.current_url == "https://labs.play-with-k8s.com/ooc" and retry:
         playwithdocker(False)
+    else:
+        start()
     return
+
+def start():
+    time.sleep(10)
+    btn_new = driver.find_element(By.CLASS_NAME, "md-primary")
+    if btn_new == None:
+        time.sleep(50)
+        btn_new = driver.find_element(By.CLASS_NAME, "md-primary")
+    btn_new.click()
+
+    print("等待主机启动.")
+    time.sleep(30)
+    terminal = driver.find_element(By.CLASS_NAME, "terminal-container")
+    terminal.click()
+    newline = driver.find_element(By.CLASS_NAME, "xterm-helper-textarea")
+    newline.send_keys("curl https://raw.githubusercontent.com/xiaop1ng/playWithSh/main/home/ssr.sh | sh -")
+    newline.send_keys(Keys.ENTER)
+
+    print("done.")
+    # 十五分钟后推出浏览器 防止 session 失效
+    time.sleep(60 * 15)
+    # 退出浏览器
+    driver.close()
+    driver.quit()
 
 # test
 try:
@@ -94,29 +121,3 @@ except Exception as e:
     print("Error: 打开终端异常，开始尝试使用 play with k8s，%s", e)
     time.sleep(10)
     playwithk8s()
-
-
-
-
-
-time.sleep(10)
-btn_new = driver.find_element(By.CLASS_NAME, "md-primary")
-if btn_new == None:
-    time.sleep(50)
-    btn_new = driver.find_element(By.CLASS_NAME, "md-primary")
-btn_new.click()
-
-print("等待主机启动.")
-time.sleep(30)
-terminal = driver.find_element(By.CLASS_NAME, "terminal-container")
-terminal.click()
-newline = driver.find_element(By.CLASS_NAME, "xterm-helper-textarea")
-newline.send_keys("curl https://raw.githubusercontent.com/xiaop1ng/playWithSh/main/home/ssr.sh | sh -")
-newline.send_keys(Keys.ENTER)
-
-print("done.")
-# 十五分钟后推出浏览器 防止 session 失效
-time.sleep(60*15)
-# 退出浏览器
-driver.close()
-driver.quit()
