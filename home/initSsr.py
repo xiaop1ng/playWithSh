@@ -115,8 +115,8 @@ newline.send_keys("curl https://raw.githubusercontent.com/xiaop1ng/playWithSh/ma
 newline.send_keys(Keys.ENTER)
 
 print("done.")
-# 两个小时后推出浏览器 防止 session 失效
-time.sleep(60*60*3)
+# 十五分钟后推出浏览器 防止 session 失效
+time.sleep(60*15)
 # 退出浏览器
 driver.close()
 driver.quit()
