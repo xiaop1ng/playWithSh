@@ -34,6 +34,7 @@ elif sys == "Windows":
 # 初始化一个driver，chromedriver的路径选择的是相对路径，不行就写绝对路径
 driver = webdriver.Chrome(options=options, service= Service(executable_path=path))
 print("驱动完成初始化.")
+print("正在启动终端.")
 
 def playwithdocker(retry = True):
     print("play with docker invoke.")
@@ -63,7 +64,6 @@ def playwithdocker(retry = True):
         start()
     return
 
-print("正在启动终端.")
 
 def playwithk8s(retry = True):
     print("play with k8s invoke.")
@@ -108,16 +108,22 @@ def start():
     newline.send_keys(Keys.ENTER)
 
     print("done.")
-    # 十五分钟后推出浏览器 防止 session 失效
-    time.sleep(60 * 15)
+    # 三小时后推出浏览器 防止 session 失效
+    time.sleep(60 * 60 * 3)
     # 退出浏览器
     driver.close()
     driver.quit()
-
 # test
-try:
-    playwithdocker()
-except Exception as e:
-    print("Error: 打开终端异常，开始尝试使用 play with k8s，%s", e)
-    time.sleep(10)
-    playwithk8s()
+def test(retry):
+    try:
+        retry+=1
+        playwithdocker()
+    except Exception as e:
+        print("Error: 打开终端异常，开始尝试使用 play with k8s，%s", e)
+        if (retry <= 3):
+            print("五分钟后开始第%s次重试", retry)
+            time.sleep(60*5)
+            test(retry)
+            print("重试完成.")
+
+test(0)
