@@ -53,7 +53,7 @@ server {
 EOF
 
 docker pull nginx
-docker pull jellyfin/jellyfin
+docker pull jellyfin/jellyfin:latest
 
 docker create -p 8081:8081 -v $(pwd):/data --name file-server --restart always nginx
 
