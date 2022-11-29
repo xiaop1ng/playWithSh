@@ -11,7 +11,7 @@ mkdir /etc/frp
 # create file: frp clien config
 cat>/etc/frp/frpc.ini<<EOF
 [common]
-server_addr = 116.76.37.159
+server_addr = 115.45.40.4
 server_port = 7000
 
 [tcp]
