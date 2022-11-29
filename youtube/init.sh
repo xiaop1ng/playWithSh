@@ -39,7 +39,7 @@ EOF
 
 cat > nginx-file-server.conf << EOF
 server {
-    listen 8081;
+    listen 80;
     server_name localhost;
     charset utf-8;
     root /data;
