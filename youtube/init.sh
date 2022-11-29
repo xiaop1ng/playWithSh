@@ -1,8 +1,6 @@
 #!/bin/bash
 
 pip install yt-dlp
-mkdir /sys/fs/cgroup/nginx
-cd /sys/fs/cgroup/nginx
 
 cat > nginx.conf << EOF
 user  root;
