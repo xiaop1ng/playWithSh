@@ -41,7 +41,7 @@ EOF
 
 cat > nginx-file-server.conf << EOF
 server {
-    listen 80;
+    listen 8081;
     server_name localhost;
     charset utf-8;
     root /data;
@@ -54,7 +54,7 @@ server {
 }
 EOF
 
-docker create -p 80:80 -v $(pwd):/data --name file-server --restart always nginx
+docker create -p 8081:8081 -v $(pwd):/data --name file-server --restart always nginx
 
 docker cp $(pwd)/nginx.conf file-server:/etc/nginx/nginx.conf
 
