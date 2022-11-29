@@ -1,12 +1,14 @@
 #!/bin/bash
 
 pip install yt-dlp
+mkdir /sys/fs/cgroup/nginx
+cd /sys/fs/cgroup/nginx
 
 cat > nginx.conf << EOF
 user  root;
 worker_processes  1;
 
-error_log  /var/log/nginx/error.log warn;
+error_log  /dev/null;
 pid        /var/run/nginx.pid;
 
 
@@ -24,7 +26,7 @@ http {
                       '$status $body_bytes_sent "$http_referer" '
                       '"$http_user_agent" "$http_x_forwarded_for"';
 
-    access_log  /var/log/nginx/access.log  main;
+    access_log  off;
 
     sendfile        on;
     #tcp_nopush     on;
@@ -52,7 +54,7 @@ server {
 }
 EOF
 
-docker create -p 8081:8081 -v $(pwd):/data --name file-server --restart always nginx
+docker create -p 80:80 -v $(pwd):/data --name file-server --restart always nginx
 
 docker cp $(pwd)/nginx.conf file-server:/etc/nginx/nginx.conf
 
