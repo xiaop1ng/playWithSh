@@ -1,7 +1,5 @@
 #!/bin/bash
 
-pip install yt-dlp
-
 cat > nginx.conf << EOF
 user  root;
 worker_processes  1;
@@ -53,7 +51,8 @@ server {
 EOF
 
 docker pull nginx
-
+# 包含 ffmpeg 的 yt-dlp
+docker pull tnk4on/yt-dlp
 
 docker create -p 8081:8081 -v $(pwd):/data --name file-server --restart always nginx
 
@@ -67,3 +66,5 @@ docker start file-server
 # docker pull jellyfin/jellyfin:latest
 # docker run -d -p 8096:8096 -v /jellyfin/config:/config -v $(pwd):/media jellyfin/jellyfin
 rm -f $(pwd)/nginx.conf $(pwd)/nginx-file-server.conf
+
+chmod 777 ./
