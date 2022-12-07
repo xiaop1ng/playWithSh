@@ -43,6 +43,7 @@ def playwithdocker(retry = True):
     # 请求网页
     driver.get(oauth_url)
     user_name = driver.find_element(By.ID, "username")
+    # colin2022 colin@2022
     user_name.send_keys('xiaop1ng')
     btn_continue = driver.find_element(By.CLASS_NAME, "_button-login-id")
     btn_continue.click()
@@ -121,7 +122,7 @@ def test(retry):
     except Exception as e:
         print("Error: 打开终端异常，开始尝试使用 play with k8s，%s", e)
         if (retry <= 3):
-            print("五分钟后开始第%s次重试", retry)
+            print("五分钟后开始第 " + retry + " 次重试")
             time.sleep(60*5)
             test(retry)
             print("重试完成.")
