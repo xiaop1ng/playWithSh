@@ -13,7 +13,6 @@ cat>/etc/frp/frpc.ini<<EOF
 [common]
 server_addr = 115.45.40.4
 server_port = 7000
-protocol = kcp
 
 [tcp]
 type = tcp

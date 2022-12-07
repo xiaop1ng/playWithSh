@@ -43,7 +43,7 @@ def playwithdocker(retry = True):
     # 请求网页
     driver.get(oauth_url)
     user_name = driver.find_element(By.ID, "username")
-    # colin2022 colin@2022
+    # 切换用户来避免 colin2022 colin@2022
     user_name.send_keys('xiaop1ng')
     btn_continue = driver.find_element(By.CLASS_NAME, "_button-login-id")
     btn_continue.click()
