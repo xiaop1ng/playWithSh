@@ -1,5 +1,6 @@
 import time
 import platform
+import datetime
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -31,6 +32,19 @@ elif sys == "Windows":
     path = './chromedriver.exe'
 
 
+
+u = ['xiaop1ng', 'colin2022']
+p = ['ping@1234', 'colin@2022']
+hours = [0,2,4,6,8,10,12,14,16,18,20,22]
+h = datetime.datetime.now().hour
+try:
+    idx = hours.index(h)%2
+except Exception as e:
+    idx = 0
+
+print("curren user:" + u[idx])
+
+
 # 初始化一个driver，chromedriver的路径选择的是相对路径，不行就写绝对路径
 driver = webdriver.Chrome(options=options, service= Service(executable_path=path))
 print("驱动完成初始化.")
@@ -43,12 +57,11 @@ def playwithdocker(retry = True):
     # 请求网页
     driver.get(oauth_url)
     user_name = driver.find_element(By.ID, "username")
-    # 切换用户来避免 colin2022 colin@2022
-    user_name.send_keys('xiaop1ng')
+    user_name.send_keys(u[idx])
     btn_continue = driver.find_element(By.CLASS_NAME, "_button-login-id")
     btn_continue.click()
     password = driver.find_element(By.ID, "password")
-    password.send_keys("ping@1234")
+    password.send_keys(p[idx])
     btn_login = driver.find_element(By.CLASS_NAME, "_button-login-password")
     btn_login.click()
     time.sleep(3)
@@ -73,9 +86,9 @@ def playwithk8s(retry = True):
     # 请求网页
     driver.get(oauth_url)
     user_name = driver.find_element(By.ID, "nw_username")
-    user_name.send_keys('xiaop1ng')
+    user_name.send_keys(u[idx])
     password = driver.find_element(By.ID, "nw_password")
-    password.send_keys("ping@1234")
+    password.send_keys(p[idx])
     btn_login = driver.find_element(By.ID, "nw_submit")
     btn_login.click()
     time.sleep(3)
@@ -109,8 +122,8 @@ def start():
     newline.send_keys(Keys.ENTER)
 
     print("done.")
-    # 三小时后推出浏览器 防止 session 失效
-    time.sleep(60 * 60 * 3)
+    # 五分钟后退出浏览器，防止脚本没跑完就退出了
+    time.sleep(60 * 5)
     # 退出浏览器
     driver.close()
     driver.quit()
@@ -120,9 +133,9 @@ def test(retry):
         retry+=1
         playwithdocker()
     except Exception as e:
-        print("Error: 打开终端异常，开始尝试使用 play with k8s，%s", e)
+        print("Error: 打开终端异常，%s", e)
         if (retry <= 3):
-            print("五分钟后开始第 " + retry + " 次重试")
+            print("五分钟后开始第 " + str(retry) + " 次重试")
             time.sleep(60*5)
             test(retry)
             print("重试完成.")
