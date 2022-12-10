@@ -14,11 +14,13 @@ cat>/etc/frp/frpc.ini<<EOF
 server_addr = 116.76.36.169
 server_port = 7000
 
+
 [tcp]
 type = tcp
 remote_port = 8388
 local_ip = 127.0.0.1
 local_port = 8388
+use_compression = true
 EOF
 
 # wait shadowsocks up: start frpc
