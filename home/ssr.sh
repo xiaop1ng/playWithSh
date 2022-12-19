@@ -22,6 +22,8 @@ remote_port = 8388
 local_ip = 127.0.0.1
 local_port = 8388
 use_compression = true
+group = ssr
+group_key = 123
 EOF
 
 # wait shadowsocks up: start frpc
