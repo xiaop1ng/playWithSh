@@ -8,14 +8,15 @@ docker run -d --restart=always -p 8388:8388 -p 8388:8388/udp shadowsocks/shadows
 
 # install frp
 mkdir /etc/frp
+time1 = `date +%s`
 # create file: frp clien config
 cat>/etc/frp/frpc.ini<<EOF
 [common]
 server_addr = 116.76.36.169
 server_port = 7000
+token = 0624eb6cbdd84a4ea270e543f53f4582
 
-
-[tcp]
+[tcp$time1]
 type = tcp
 remote_port = 8388
 local_ip = 127.0.0.1
