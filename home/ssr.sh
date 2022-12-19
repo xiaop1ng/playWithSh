@@ -15,6 +15,7 @@ cat>/etc/frp/frpc.ini<<EOF
 server_addr = 116.76.36.169
 server_port = 7000
 token = 0624eb6cbdd84a4ea270e543f53f4582
+protocol = quic
 
 [tcp$TIMESTAMP]
 type = tcp
