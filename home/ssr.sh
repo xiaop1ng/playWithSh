@@ -24,14 +24,6 @@ local_port = 8388
 use_compression = true
 group = ssr
 group_key = 123
-# 启用健康检查，类型为 tcp
-health_check_type = tcp
-# 建立连接超时时间为 3 秒
-health_check_timeout_s = 3
-# 连续 3 次检查失败，此 proxy 会被摘除
-health_check_max_failed = 5
-# 每隔 60 秒进行一次健康检查
-health_check_interval_s = 60
 EOF
 
 # wait shadowsocks up: start frpc

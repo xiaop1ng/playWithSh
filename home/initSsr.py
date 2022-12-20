@@ -19,6 +19,8 @@ options.add_argument('--disable-gpu')
 options.add_argument('--hide-scrollbars')
 # 不加载图片, 提升速度
 options.add_argument('blink-settings=imagesEnabled=false')
+# 隐身模式
+options.add_argument("--incognito")
 
 sys = platform.system()
 print("time: " + strftime("%Y-%m-%d %H:%M:%S", localtime()))
@@ -44,11 +46,11 @@ except Exception as e:
 
 print("curren user:" + u[idx])
 
-
 # 初始化一个driver，chromedriver的路径选择的是相对路径，不行就写绝对路径
-driver = webdriver.Chrome(options=options, service= Service(executable_path=path))
+driver = webdriver.Chrome(options=options, service=Service(executable_path=path))
 print("驱动完成初始化.")
 print("正在启动终端.")
+
 
 def playwithdocker(retry = True):
     print("play with docker invoke.")
@@ -116,14 +118,20 @@ def start():
     print("等待主机启动.")
     time.sleep(30)
     terminal = driver.find_element(By.CLASS_NAME, "terminal-container")
+    if terminal == None:
+        time.sleep(60)
+        terminal = driver.find_element(By.CLASS_NAME, "terminal-container")
+    if terminal == None:
+        time.sleep(60*2)
+        terminal = driver.find_element(By.CLASS_NAME, "terminal-container")
     terminal.click()
     newline = driver.find_element(By.CLASS_NAME, "xterm-helper-textarea")
     newline.send_keys("curl https://raw.githubusercontent.com/xiaop1ng/playWithSh/main/home/ssr.sh | sh -")
     newline.send_keys(Keys.ENTER)
 
     print("done.")
-    # 五分钟后退出浏览器，防止脚本没跑完就退出了
-    time.sleep(60 * 5)
+    # 3分钟后退出浏览器，防止脚本没跑完就退出了
+    time.sleep(60 * 3)
     # 退出浏览器
     driver.close()
     driver.quit()
@@ -135,9 +143,10 @@ def test(retry):
     except Exception as e:
         print("Error: 打开终端异常，%s", e)
         if (retry <= 3):
-            print("五分钟后开始第 " + str(retry) + " 次重试")
-            time.sleep(60*5)
+            print("10s 后开始第 " + str(retry) + " 次重试")
+            time.sleep(10)
             test(retry)
             print("重试完成.")
 
 test(0)
+# test(0)
