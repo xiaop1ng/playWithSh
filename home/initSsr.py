@@ -6,6 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from time import localtime,strftime
 from selenium.webdriver.chrome.service import Service
+# from fake_useragent import UserAgent
 
 # 创建chrome参数对象
 options = webdriver.ChromeOptions()
@@ -22,6 +23,12 @@ options.add_argument('blink-settings=imagesEnabled=false')
 # 隐身模式
 options.add_argument("--incognito")
 
+
+# ua = UserAgent()
+# user_agent = ua.random
+# print(user_agent)
+# options.add_argument(f'user-agent={user_agent}')
+
 sys = platform.system()
 print("time: " + strftime("%Y-%m-%d %H:%M:%S", localtime()))
 print("system: " + sys)
@@ -35,8 +42,8 @@ elif sys == "Windows":
 
 
 
-u = ['xiaop1ng', 'colin2022']
-p = ['ping@1234', 'colin@2022']
+u = ['colin2023', 'colin2022']
+p = ['colin@2022', 'colin@2022']
 hours = [0,2,4,6,8,10,12,14,16,18,20,22]
 h = datetime.datetime.now().hour
 try:
@@ -136,17 +143,10 @@ def start():
     driver.close()
     driver.quit()
 # test
-def test(retry):
+def test():
     try:
-        retry+=1
         playwithdocker()
     except Exception as e:
         print("Error: 打开终端异常，%s", e)
-        if (retry <= 3):
-            print("10s 后开始第 " + str(retry) + " 次重试")
-            time.sleep(10)
-            test(retry)
-            print("重试完成.")
 
-test(0)
-# test(0)
+test()
