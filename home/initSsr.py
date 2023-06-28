@@ -36,7 +36,7 @@ path='./chromedriver'
 if sys == "Linux":
     # 浏览器不提供可视化页面. linux下如果系统不支持可视化不加这条会启动失败
     options.add_argument('--headless')
-    path = '/root/py/chromedriver'
+    path = '/app/playWithSh/home/chromedriver'
 elif sys == "Windows":
     path = './chromedriver.exe'
 
@@ -53,8 +53,10 @@ except Exception as e:
 
 print("curren user:" + u[idx])
 
-# 初始化一个driver，chromedriver的路径选择的是相对路径，不行就写绝对路径
-driver = webdriver.Chrome(options=options, service=Service(executable_path=path))
+# 初始化一个driver，chromedriver的路径选择的是相对路径，不行就写绝对路径 selenium4
+# driver = webdriver.Chrome(options=options, service=Service(executable_path=path))
+# selenium3
+driver = webdriver.Chrome(options=options, executable_path=path)
 print("驱动完成初始化.")
 print("正在启动终端.")
 
@@ -80,39 +82,13 @@ def playwithdocker(retry = True):
     time.sleep(5)
     btn_start = driver.find_element(By.CLASS_NAME, "btn-success")
     btn_start.click()
-    # 检查浏览器地址是否 ooc，尝试从 playwithk8s 启动
+    # 检查浏览器地址是否 ooc
     if driver.current_url == "https://labs.play-with-docker.com/ooc" and retry:
-        playwithk8s(False)
+        print("Error: 服务端暂无资源")
     else:
         start()
     return
 
-
-def playwithk8s(retry = True):
-    print("play with k8s invoke.")
-    # 打开登录页 获取登录按钮
-    oauth_url = "https://labs.play-with-k8s.com/oauth/providers/docker/login"
-    # 请求网页
-    driver.get(oauth_url)
-    user_name = driver.find_element(By.ID, "nw_username")
-    user_name.send_keys(u[idx])
-    password = driver.find_element(By.ID, "nw_password")
-    password.send_keys(p[idx])
-    btn_login = driver.find_element(By.ID, "nw_submit")
-    btn_login.click()
-    time.sleep(3)
-    # 网页主页面请求路径
-    url = "https://labs.play-with-k8s.com/"
-    driver.get(url)
-    time.sleep(5)
-    btn_start = driver.find_element(By.CLASS_NAME, "btn-success")
-    btn_start.click()
-    # 检查浏览器地址是否 ooc，尝试从 playwithk8s 启动
-    if driver.current_url == "https://labs.play-with-k8s.com/ooc" and retry:
-        playwithdocker(False)
-    else:
-        start()
-    return
 
 def start():
     time.sleep(10)
@@ -133,7 +109,7 @@ def start():
         terminal = driver.find_element(By.CLASS_NAME, "terminal-container")
     terminal.click()
     newline = driver.find_element(By.CLASS_NAME, "xterm-helper-textarea")
-    newline.send_keys("curl https://raw.githubusercontent.com/xiaop1ng/playWithSh/main/home/ssr.sh | sh -")
+    newline.send_keys("curl https://raw.githubusercontent.com/xiaop1ng/playWithSh/main/home/ssr.sh?v=2 | sh -")
     newline.send_keys(Keys.ENTER)
 
     print("done.")
