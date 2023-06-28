@@ -14,7 +14,6 @@ cat>/etc/frp/frpc.ini<<EOF
 [common]
 server_addr = 121.37.98.57
 server_port = 7000
-token = 0624eb6cbdd84a4ea270e543f53f4582
 
 [tcp$TIMESTAMP]
 type = tcp
