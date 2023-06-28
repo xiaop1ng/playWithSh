@@ -10,7 +10,7 @@ docker run -d --restart=always -p 8388:8388 -p 8388:8388/udp shadowsocks/shadows
 # create file: frp clien config
 cat>~/frpc.ini<<EOF
 [common]
-server_addr = 1.12.227.99
+server_addr = 121.37.98.57
 server_port = 7000
 
 [ssr]
