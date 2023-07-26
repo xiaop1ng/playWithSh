@@ -71,6 +71,7 @@ def playwithdocker(retry = True):
     user_name.send_keys(u[idx])
     btn_continue = driver.find_element(By.CLASS_NAME, "_button-login-id")
     btn_continue.click()
+    time.sleep(3)
     password = driver.find_element(By.ID, "password")
     password.send_keys(p[idx])
     btn_login = driver.find_element(By.CLASS_NAME, "_button-login-password")
