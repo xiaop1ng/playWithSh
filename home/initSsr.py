@@ -54,9 +54,9 @@ except Exception as e:
 print("curren user:" + u[idx])
 
 # 初始化一个driver，chromedriver的路径选择的是相对路径，不行就写绝对路径 selenium4
-# driver = webdriver.Chrome(options=options, service=Service(executable_path=path))
+driver = webdriver.Chrome(options=options, service=Service(executable_path=path))
 # selenium3
-driver = webdriver.Chrome(options=options, executable_path=path)
+# driver = webdriver.Chrome(options=options, executable_path=path)
 print("驱动完成初始化.")
 print("正在启动终端.")
 
