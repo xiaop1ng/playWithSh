@@ -1,7 +1,7 @@
 @echo off
 echo start application...
 :: 启动 docker ，frps 自动启动
-start "" "C:\Program Files\docker\docker.exe"
+start "" "C:\Program Files\Docker\Docker\Docker Desktop.exe"
 :: 启动脚本
 python initSsr.py
 echo application start success!
