@@ -3,8 +3,8 @@ echo start application...
 :: 启动 docker ，frps 自动启动
 start "" "C:\Program Files\Docker\Docker\Docker Desktop.exe"
 :: 启动脚本
-python initSsr.py
+start python initSsr.py
 echo application start success!
 :: 打开 ss 客户端
-start "" "C:\Shadowsocks-4.4.1.0\Shadowsocks.exe"
+start "" "D:\Shadowsocks-4.4.1.0\Shadowsocks.exe"
 pause

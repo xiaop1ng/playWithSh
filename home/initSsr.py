@@ -6,10 +6,20 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from time import localtime,strftime
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.support import expected_conditions as EC
+
 # from fake_useragent import UserAgent
 
 # 创建chrome参数对象
 options = webdriver.ChromeOptions()
+
+
+# ua = UserAgent()
+# user_agent = ua.random
+# print(user_agent)
+# options.add_argument(f'user-agent={user_agent}')
+
+sys = platform.system()
 # 解决DevToolsActivePort文件不存在的报错
 options.add_argument('--no-sandbox')
 # 指定浏览器分辨率
@@ -20,16 +30,13 @@ options.add_argument('--disable-gpu')
 options.add_argument('--hide-scrollbars')
 # 不加载图片, 提升速度
 options.add_argument('blink-settings=imagesEnabled=false')
-# 隐身模式
-options.add_argument("--incognito")
+if sys == "Linux":
+    # 隐身模式
+    options.add_argument("--incognito")
+elif sys == "Windows":
+    # options.add_argument('--disk-cache-dir=C:/Users/colin/AppData/Local/Google/Chrome/User Data/Default/Cache')
+    options.add_argument('--user-data-dir=C:/Users/colin/AppData/Local/Google/Chrome/User Data')
 
-
-# ua = UserAgent()
-# user_agent = ua.random
-# print(user_agent)
-# options.add_argument(f'user-agent={user_agent}')
-
-sys = platform.system()
 print("time: " + strftime("%Y-%m-%d %H:%M:%S", localtime()))
 print("system: " + sys)
 path='./chromedriver'
@@ -67,18 +74,20 @@ def playwithdocker(retry = True):
     oauth_url = "https://labs.play-with-docker.com/oauth/providers/docker/login"
     # 请求网页
     driver.get(oauth_url)
-    user_name = driver.find_element(By.ID, "username")
-    user_name.send_keys(u[idx])
-    btn_continue = driver.find_element(By.CLASS_NAME, "_button-login-id")
-    btn_continue.click()
-    time.sleep(3)
-    password = driver.find_element(By.ID, "password")
-    password.send_keys(p[idx])
-    btn_login = driver.find_element(By.CLASS_NAME, "_button-login-password")
-    btn_login.click()
-    time.sleep(3)
+
+    if driver.current_url.startswith('https://login.docker.com'):
+        user_name = driver.find_element(By.ID, "username")
+        user_name.send_keys(u[idx])
+        btn_continue = driver.find_element(By.CLASS_NAME, "_button-login-id")
+        btn_continue.click()
+        time.sleep(3)
+        password = driver.find_element(By.ID, "password")
+        password.send_keys(p[idx])
+        btn_login = driver.find_element(By.CLASS_NAME, "_button-login-password")
+        btn_login.click()
+        time.sleep(3)
     # 网页主页面请求路径
-    url = "https://labs.play-with-docker.com/"
+    url = "https://labs.play-with-docker.com"
     driver.get(url)
     time.sleep(5)
     btn_start = driver.find_element(By.CLASS_NAME, "btn-success")
@@ -100,7 +109,7 @@ def start():
     btn_new.click()
 
     print("等待主机启动.")
-    time.sleep(30)
+    time.sleep(10)
     terminal = driver.find_element(By.CLASS_NAME, "terminal-container")
     if terminal == None:
         time.sleep(60)
