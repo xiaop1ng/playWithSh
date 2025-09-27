@@ -13,7 +13,7 @@ export TIMESTAMP=`date +%s`
 # create file: frp clien config
 cat>~/frpc.ini<<EOF
 [common]
-server_addr = 14.153.154.217
+server_addr = 117.72.84.56
 server_port = 7000
 [tcp$TIMESTAMP]
 type = tcp
